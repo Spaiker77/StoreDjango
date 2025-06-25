@@ -1,0 +1,58 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<section class="text-center mb-5">
+    <h1 class="display-5 fw-bold mb-3">Skystore</h1>
+    <p class="lead text-muted">Магазин цифровых товаров для разработчиков</p>
+    <a href="#" class="btn btn-primary btn-lg px-4">Начать покупки</a>
+</section>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for i in "123" %}
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Товар {{ i }}</h5>
+                <p class="card-text text-muted">Описание товара и его основные возможности.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-primary fw-bold">$15</span>
+                    <button class="btn btn-sm btn-outline-primary">В корзину</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<section class="mt-5 pt-5">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="text-center p-3">
+                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <i class="bi bi-shield-check fs-4"></i>
+                </div>
+                <h5>Безопасность</h5>
+                <p class="text-muted">Все товары проверены на качество.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="text-center p-3">
+                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <i class="bi bi-headset fs-4"></i>
+                </div>
+                <h5>Поддержка</h5>
+                <p class="text-muted">Помощь при работе с товарами.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="text-center p-3">
+                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <i class="bi bi-arrow-repeat fs-4"></i>
+                </div>
+                <h5>Обновления</h5>
+                <p class="text-muted">Регулярные обновления продуктов.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

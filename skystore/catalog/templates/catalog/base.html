@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Skystore{% endblock %}</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <header class="bg-light border-bottom">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center py-3">
+                <a href="/" class="text-decoration-none">
+                    <span class="fs-4 fw-bold text-primary">Skystore</span>
+                </a>
+                <nav>
+                    <a href="/" class="btn btn-outline-primary me-2">Главная</a>
+                    <a href="/contacts/" class="btn btn-outline-primary">Контакты</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-5">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-light border-top py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Skystore</h5>
+                    <p class="text-muted">Магазин цифровых товаров для разработчиков.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Меню</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-decoration-none text-muted">Главная</a></li>
+                        <li><a href="/contacts/" class="text-decoration-none text-muted">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Контакты</h5>
+                    <ul class="list-unstyled text-muted">
+                        <li>spaike77@mail.ru</li>
+                        <li>+7 (111) 111-11-11</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center text-muted">
+                <small>© 2025 Skystore. Все права защищены.</small>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
