@@ -172,9 +172,9 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
-config/database.ini
-config
+__pycache__
 *.sqlite
 *.db
 *.pyc
 .DS_Store
+sqlite
