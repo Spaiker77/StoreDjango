@@ -1,0 +1,34 @@
+/* Основные цвета */
+:root {
+    --bs-primary-rgb: 13, 110, 253;
+}
+
+/* Общие стили */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Карточки */
+.card {
+    transition: transform 0.2s;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.card:hover {
+    transform: translateY(-2px);
+}
+
+/* Кнопки */
+.btn-primary {
+    background-color: rgba(var(--bs-primary-rgb), 1);
+    border-color: rgba(var(--bs-primary-rgb), 1);
+}
+
+/* Формы */
+.form-control:focus {
+    border-color: rgba(var(--bs-primary-rgb), 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.1);
+}
+
+/* Иконки */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css");
