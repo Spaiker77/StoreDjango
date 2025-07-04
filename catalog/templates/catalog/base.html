@@ -4,19 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Skystore{% endblock %}</title>
+    <!-- Локальные файлы Bootstrap CSS -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/styles.css" rel="stylesheet">
 </head>
 <body>
     <header class="bg-light border-bottom">
         <div class="container">
-            <div class="d-flex justify-content-between align-items-center py-3">
-                <a href="/" class="text-decoration-none">
+            <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
+                <a href="/" class="d-flex align-items-center text-decoration-none">
                     <span class="fs-4 fw-bold text-primary">Skystore</span>
                 </a>
-                <nav>
-                    <a href="/" class="btn btn-outline-primary me-2">Главная</a>
-                    <a href="/contacts/" class="btn btn-outline-primary">Контакты</a>
+
+                <nav class="nav nav-pills">
+                    <div class="nav-item dropdown me-2">
+                        <a class="nav-link dropdown-toggle btn btn-outline-primary" href="#" role="button" data-bs-toggle="dropdown">
+                            Категории
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% for category in categories %}
+                            <li><a class="dropdown-item" href="#">{{ category.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <a href="/" class="nav-link btn btn-outline-primary me-2">Главная</a>
+                    <a href="/contacts/" class="nav-link btn btn-outline-primary">Контакты</a>
                 </nav>
             </div>
         </div>
@@ -31,13 +43,14 @@
             <div class="row">
                 <div class="col-md-6">
                     <h5>Skystore</h5>
-                    <p class="text-muted">Магазин цифровых товаров для разработчиков.</p>
+                    <p class="text-muted">Магазин цифровых товаров</p>
                 </div>
                 <div class="col-md-3">
-                    <h5>Меню</h5>
+                    <h5>Категории</h5>
                     <ul class="list-unstyled">
-                        <li><a href="/" class="text-decoration-none text-muted">Главная</a></li>
-                        <li><a href="/contacts/" class="text-decoration-none text-muted">Контакты</a></li>
+                        {% for category in categories|slice:":3" %}
+                        <li><a href="#" class="text-decoration-none text-muted">{{ category.name }}</a></li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="col-md-3">
