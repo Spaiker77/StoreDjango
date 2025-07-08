@@ -1,0 +1,50 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5 pt-4">
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="bg-light rounded-3 p-3">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" class="product-image img-fluid" alt="{{ product.name }}">
+                {% else %}
+                <div class="d-flex align-items-center justify-content-center bg-light rounded-3" style="height: 400px;">
+                    <span class="text-muted">Нет изображения</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h1 class="product-title">{{ product.name }}</h1>
+            <p class="product-category">Категория: {{ product.category }}</p>
+
+            <div class="d-flex align-items-center mb-4">
+                <span class="product-price me-3">{{ product.price }} ₽</span>
+                <span class="badge bg-success">В наличии</span>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Описание</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                </div>
+            </div>
+
+            <div class="d-flex gap-3">
+                <button class="btn btn-primary btn-lg add-to-cart" data-product="{{ product.name }}">
+                    Добавить в корзину
+                </button>
+                <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-lg">Вернуться</a>
+            </div>
+
+            <div class="mt-4 pt-3 border-top">
+                <small class="text-muted">Добавлено: {{ product.created_at|date:"d.m.Y" }}</small>
+                {% if product.updated_at != product.created_at %}
+                <small class="text-muted ms-3">Обновлено: {{ product.updated_at|date:"d.m.Y" }}</small>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

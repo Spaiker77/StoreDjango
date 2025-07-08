@@ -1,6 +1,6 @@
-from django.shortcuts import render
 from .models import Product, Category, Contact
-
+from django.shortcuts import render, get_object_or_404, redirect
+from .forms import ProductForm
 
 def home(request):
     """Главная страница с последними товарами и категориями"""
@@ -30,3 +30,24 @@ def contacts(request):
         'categories': Category.objects.all(),  # Для отображения в навигации
     }
     return render(request, 'catalog/contacts.html', context)
+
+def product_detail(request, pk):
+    """Контроллер для страницы товара"""
+    product = get_object_or_404(Product, pk=pk)
+    return render(request, 'catalog/product_detail.html', {'product': product})
+
+def home(request):
+    """Главная страница с товарами"""
+    products = Product.objects.order_by('-created_at')[:12]  # Ограничиваем количество
+    return render(request, 'catalog/home.html', {'products': products})
+
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = ProductForm()
+
+    return render(request, 'catalog/add_product.html', {'form': form})
