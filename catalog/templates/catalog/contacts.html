@@ -1,0 +1,54 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body p-4">
+                <h2 class="card-title text-center mb-4">Контакты</h2>
+
+                {% if contact %}
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3">
+                        <h5>Адрес</h5>
+                        <p class="text-muted">{{ contact.address }}</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <h5>Телефон</h5>
+                        <p class="text-muted">{{ contact.phone }}</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <h5>Email</h5>
+                        <p class="text-muted">{{ contact.email }}</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <h5>Часы работы</h5>
+                        <p class="text-muted">{{ contact.working_hours }}</p>
+                    </div>
+                </div>
+                {% endif %}
+
+                <h4 class="mb-3">Форма обратной связи</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Ваше имя</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Телефон</label>
+                        <input type="text" class="form-control" id="phone" name="phone" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Сообщение</label>
+                        <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2">
+                        Отправить сообщение
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
