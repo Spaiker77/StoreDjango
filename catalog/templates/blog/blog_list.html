@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Блог{% endblock %}
+
+{% block content %}
+<h1>Блог</h1>
+<ul>
+    {% for post in posts %}
+        <li>
+            <a href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a>
+            — {{ post.created_at|date:"d.m.Y" }} ({{ post.views }} просмотров)
+        </li>
+    {% empty %}
+        <li>Нет опубликованных записей.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'blog_create' %}" class="btn btn-primary">Создать статью</a>
+{% endblock %}
