@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from .models import Product
 
-# 🔒 Список запрещённых слов (переиспользуемый)
+# Список запрещённых слов (переиспользуемый)
 FORBIDDEN_WORDS = [
     'казино', 'криптовалюта', 'крипта', 'биржа',
     'дешево', 'бесплатно', 'обман', 'полиция', 'радар'
@@ -16,14 +16,14 @@ class ProductForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'rows': 3}),
         }
 
-    # 🎨 Стилизация формы
+    # Стилизация формы
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.visible_fields():
             field.field.widget.attrs['class'] = 'form-control'
         self.fields['image'].widget.attrs['class'] = 'form-control-file'
 
-    # 🧼 Валидация: запрет слов в названии
+    # Валидация: запрет слов в названии
     def clean_name(self):
         name = self.cleaned_data['name']
         for word in FORBIDDEN_WORDS:
@@ -31,7 +31,7 @@ class ProductForm(forms.ModelForm):
                 raise ValidationError(f"Название содержит запрещённое слово: «{word}»")
         return name
 
-    # 🧼 Валидация: запрет слов в описании
+    # Валидация: запрет слов в описании
     def clean_description(self):
         description = self.cleaned_data['description']
         for word in FORBIDDEN_WORDS:
@@ -39,14 +39,14 @@ class ProductForm(forms.ModelForm):
                 raise ValidationError(f"Описание содержит запрещённое слово: «{word}»")
         return description
 
-    # 💰 Валидация: цена не может быть отрицательной
+    # Валидация: цена не может быть отрицательной
     def clean_price(self):
         price = self.cleaned_data['price']
         if price < 0:
             raise ValidationError("Цена не может быть отрицательной.")
         return price
 
-    # 🖼️ Валидация: изображение — только JPG/PNG и ≤ 5MB
+    #  Валидация: изображение — только JPG/PNG и ≤ 5MB
     def clean_image(self):
         image = self.cleaned_data.get('image')
         if image:
