@@ -11,7 +11,7 @@ class Command(BaseCommand):
         Category.objects.all().delete()
 
         # Загрузка фикстур
-        with open('catalog/fixtures/category.json', 'r') as f:
+        with open('catalog/fixtures/category_fixed.json', 'r') as f:
             categories = json.load(f)
             for cat in categories:
                 Category.objects.create(
@@ -20,7 +20,7 @@ class Command(BaseCommand):
                     description=cat['fields']['description']
                 )
 
-        with open('catalog/fixtures/product.json', 'r') as f:
+        with open('catalog/fixtures/product_fixed.json', 'r') as f:
             products = json.load(f)
             for prod in products:
                 Product.objects.create(
