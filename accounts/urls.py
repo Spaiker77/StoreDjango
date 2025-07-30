@@ -8,4 +8,5 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', require_POST(LogoutView.as_view()), name='logout'),
     path('profile/', ProfileUpdateView.as_view(), name='profile'),
+
 ]

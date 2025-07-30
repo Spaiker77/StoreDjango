@@ -3,7 +3,8 @@ from django.urls import reverse_lazy, reverse
 from django.core.mail import send_mail
 from django.shortcuts import redirect
 from .models import BlogPost
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 
 class BlogListView(ListView):
     """Список опубликованных статей"""
@@ -62,3 +63,15 @@ class BlogDeleteView(DeleteView):
     model = BlogPost
     template_name = 'blog/blog_confirm_delete.html'
     success_url = reverse_lazy('blog_list')
+
+class BlogPostUpdateView(PermissionRequiredMixin, UpdateView):
+    model = BlogPost
+    fields = ['title', 'content', 'preview', 'is_published']
+    template_name = 'blog/post_form.html'
+    success_url = reverse_lazy('blog:post_list')
+    permission_required = 'blog.can_edit_any_post'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.has_perm('blog.can_edit_any_post'):
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
