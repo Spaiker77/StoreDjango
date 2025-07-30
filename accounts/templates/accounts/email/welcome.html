@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добро пожаловать!</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #4CAF50; color: white; padding: 10px; text-align: center; }
+        .content { padding: 20px; }
+        .footer { margin-top: 20px; font-size: 0.8em; color: #777; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Добро пожаловать в наш магазин!</h1>
+        </div>
+        <div class="content">
+            <p>Здравствуйте, {{ user.first_name|default:"пользователь" }}!</p>
+            <p>Благодарим вас за регистрацию в нашем интернет-магазине.</p>
+            <p>Ваш email для входа: <strong>{{ user.email }}</strong></p>
+            <p>Теперь вы можете:</p>
+            <ul>
+                <li>Делать заказы в нашем магазине</li>
+                <li>Отслеживать статус заказов</li>
+                <li>Получать специальные предложения</li>
+            </ul>
+        </div>
+        <div class="footer">
+            <p>Если вы не регистрировались, пожалуйста, проигнорируйте это письмо.</p>
+            <p>&copy; {% now "Y" %} Наш магазин. Все права защищены.</p>
+        </div>
+    </div>
+</body>
+</html>
