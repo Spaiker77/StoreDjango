@@ -1,0 +1,7 @@
+{% if user.has_perm('blog.can_edit_any_post') %}
+    <a href="{% url 'blog:post_update' post.id %}" class="btn btn-warning">Редактировать</a>
+{% endif %}
+
+{% if user.has_perm('blog.can_delete_any_post') %}
+    <a href="{% url 'blog:post_delete' post.id %}" class="btn btn-danger">Удалить</a>
+{% endif %}
