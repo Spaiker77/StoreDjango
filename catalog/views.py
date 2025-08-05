@@ -7,7 +7,9 @@ from .forms import ProductForm
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
+from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
+from .services import get_products_by_category
 
 @permission_required('catalog.can_unpublish_product', raise_exception=True)
 def unpublish_product(request, pk):
@@ -45,6 +47,10 @@ class ContactPageView(TemplateView):
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'catalog/product_detail.html'
+
+    @method_decorator(cache_page(60 * 15))  # Кешируем на 15 минут
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -92,3 +98,15 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
             raise Http404("У вас нет прав на удаление этого продукта.")
         return super().dispatch(request, *args, **kwargs)
 
+class CategoryProductsView(ListView):
+    template_name = 'catalog/category_products.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        category_id = self.kwargs['category_id']
+        return get_products_by_category(category_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = Category.objects.get(id=self.kwargs['category_id'])
+        return context

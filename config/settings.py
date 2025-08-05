@@ -10,6 +10,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = True if os.getenv('DEBUG') == "True" else False
 
+CACHE_ENABLED = os.getenv('CACHE_ENABLED', 'False') == 'True'
+
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
@@ -40,7 +42,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
-        'APP_DIRS': True,
+        'APP_DIRS': not CACHE_ENABLED,  # Используем APP_DIRS только если кеширование отключено
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -48,6 +50,12 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'loaders': [
+                ('django.template.loaders.cached.Loader', [
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+                ]),
+            ] if CACHE_ENABLED else None,  # Устанавливаем loaders только при включенном кешировании
         },
     },
 ]
@@ -110,3 +118,13 @@ AUTH_USER_MODEL = 'accounts.User'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': os.getenv('REDIS_URL', 'redis://127.0.0.1:6379/1'),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
