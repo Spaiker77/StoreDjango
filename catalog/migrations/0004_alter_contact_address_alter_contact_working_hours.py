@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('catalog', '0003_alter_product_options_product_owner_product_status'),
+        ("catalog", "0003_alter_product_options_product_owner_product_status"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='contact',
-            name='address',
-            field=models.CharField(max_length=255, verbose_name='Адрес'),
+            model_name="contact",
+            name="address",
+            field=models.CharField(max_length=255, verbose_name="Адрес"),
         ),
         migrations.AlterField(
-            model_name='contact',
-            name='working_hours',
-            field=models.CharField(max_length=100, verbose_name='Время работы'),
+            model_name="contact",
+            name="working_hours",
+            field=models.CharField(max_length=100, verbose_name="Время работы"),
         ),
     ]

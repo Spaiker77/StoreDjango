@@ -8,23 +8,41 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('catalog', '0002_contact'),
+        ("catalog", "0002_contact"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='product',
-            options={'ordering': ['-created_at'], 'permissions': [('can_unpublish_product', 'Может отменять публикацию продукта')], 'verbose_name': 'Продукт', 'verbose_name_plural': 'Продукты'},
+            name="product",
+            options={
+                "ordering": ["-created_at"],
+                "permissions": [
+                    ("can_unpublish_product", "Может отменять публикацию продукта")
+                ],
+                "verbose_name": "Продукт",
+                "verbose_name_plural": "Продукты",
+            },
         ),
         migrations.AddField(
-            model_name='product',
-            name='owner',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Владелец'),
+            model_name="product",
+            name="owner",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="Владелец",
+            ),
         ),
         migrations.AddField(
-            model_name='product',
-            name='status',
-            field=models.CharField(choices=[('draft', 'Черновик'), ('published', 'Опубликован')], default='draft', max_length=20, verbose_name='Статус публикации'),
+            model_name="product",
+            name="status",
+            field=models.CharField(
+                choices=[("draft", "Черновик"), ("published", "Опубликован")],
+                default="draft",
+                max_length=20,
+                verbose_name="Статус публикации",
+            ),
         ),
     ]
