@@ -6,37 +6,63 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accounts', '0001_initial'),
+        ("accounts", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='user',
-            options={'ordering': ['-date_joined'], 'verbose_name': 'Пользователь', 'verbose_name_plural': 'Пользователи'},
+            name="user",
+            options={
+                "ordering": ["-date_joined"],
+                "verbose_name": "Пользователь",
+                "verbose_name_plural": "Пользователи",
+            },
         ),
         migrations.AlterModelManagers(
-            name='user',
-            managers=[
-            ],
+            name="user",
+            managers=[],
         ),
         migrations.AlterField(
-            model_name='user',
-            name='avatar',
-            field=models.ImageField(blank=True, help_text='Загрузите изображение вашего профиля', null=True, upload_to='users/avatars/', verbose_name='Аватар профиля'),
+            model_name="user",
+            name="avatar",
+            field=models.ImageField(
+                blank=True,
+                help_text="Загрузите изображение вашего профиля",
+                null=True,
+                upload_to="users/avatars/",
+                verbose_name="Аватар профиля",
+            ),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='country',
-            field=models.CharField(blank=True, help_text='Укажите вашу страну проживания', max_length=100, null=True, verbose_name='Страна'),
+            model_name="user",
+            name="country",
+            field=models.CharField(
+                blank=True,
+                help_text="Укажите вашу страну проживания",
+                max_length=100,
+                null=True,
+                verbose_name="Страна",
+            ),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='email',
-            field=models.EmailField(help_text='Обязательное поле. Введите действующий email адрес.', max_length=254, unique=True, verbose_name='email address'),
+            model_name="user",
+            name="email",
+            field=models.EmailField(
+                help_text="Обязательное поле. Введите действующий email адрес.",
+                max_length=254,
+                unique=True,
+                verbose_name="email address",
+            ),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='phone',
-            field=models.CharField(blank=True, help_text='Введите номер в формате +79991234567', max_length=20, null=True, verbose_name='Номер телефона'),
+            model_name="user",
+            name="phone",
+            field=models.CharField(
+                blank=True,
+                help_text="Введите номер в формате +79991234567",
+                max_length=20,
+                null=True,
+                verbose_name="Номер телефона",
+            ),
         ),
     ]

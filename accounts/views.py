@@ -1,4 +1,3 @@
-
 from django.views.generic import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import UserLoginForm
@@ -14,15 +13,16 @@ from django.urls import reverse_lazy
 from django.conf import settings
 from .forms import UserRegisterForm
 
+
 class CustomLoginView(LoginView):
-    template_name = 'accounts/login.html'
+    template_name = "accounts/login.html"
     redirect_authenticated_user = True
 
 
 class RegisterView(FormView):
-    template_name = 'accounts/register.html'
+    template_name = "accounts/register.html"
     form_class = UserRegisterForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy("home")
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -36,12 +36,12 @@ class RegisterView(FormView):
             self.send_welcome_email(user)
             messages.success(
                 self.request,
-                f'Регистрация прошла успешно! На {user.email} отправлено письмо.'
+                f"Регистрация прошла успешно! На {user.email} отправлено письмо.",
             )
         except Exception as e:
             messages.error(
                 self.request,
-                'Регистрация прошла успешно, но не удалось отправить письмо.'
+                "Регистрация прошла успешно, но не удалось отправить письмо.",
             )
             # Логируем ошибку
             print(f"Ошибка отправки письма: {e}")
@@ -49,10 +49,10 @@ class RegisterView(FormView):
         return response
 
     def send_welcome_email(self, user):
-        subject = 'Добро пожаловать в наш магазин!'
+        subject = "Добро пожаловать в наш магазин!"
         html_message = render_to_string(
-            'accounts/email/welcome.html',
-            {'user': user, 'site_url': self.request.build_absolute_uri('/')}
+            "accounts/email/welcome.html",
+            {"user": user, "site_url": self.request.build_absolute_uri("/")},
         )
         plain_message = strip_tags(html_message)
 
@@ -65,19 +65,21 @@ class RegisterView(FormView):
             fail_silently=False,
         )
 
+
 class LoginView(LoginView):
     form_class = UserLoginForm
-    template_name = 'accounts/login.html'
+    template_name = "accounts/login.html"
+
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = User
-    fields = ['first_name', 'last_name', 'avatar', 'phone', 'country']
-    template_name = 'accounts/profile.html'
-    success_url = reverse_lazy('profile')
+    fields = ["first_name", "last_name", "avatar", "phone", "country"]
+    template_name = "accounts/profile.html"
+    success_url = reverse_lazy("profile")
 
     def get_object(self, queryset=None):
         return self.request.user
 
     def form_valid(self, form):
-        messages.success(self.request, 'Профиль успешно обновлен')
+        messages.success(self.request, "Профиль успешно обновлен")
         return super().form_valid(form)

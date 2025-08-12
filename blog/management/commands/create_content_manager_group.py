@@ -11,13 +11,19 @@ class Command(BaseCommand):
         content_type = ContentType.objects.get_for_model(BlogPost)
 
         # Получаем или создаем группу
-        group, created = Group.objects.get_or_create(name='Контент-менеджер')
+        group, created = Group.objects.get_or_create(name="Контент-менеджер")
 
         # Назначаем права
         permissions = Permission.objects.filter(
             content_type=content_type,
-            codename__in=['can_publish_post', 'can_edit_any_post', 'can_delete_any_post']
+            codename__in=[
+                "can_publish_post",
+                "can_edit_any_post",
+                "can_delete_any_post",
+            ],
         )
         group.permissions.set(permissions)
 
-        self.stdout.write(self.style.SUCCESS('Группа "Контент-менеджер" создана с правами!'))
+        self.stdout.write(
+            self.style.SUCCESS('Группа "Контент-менеджер" создана с правами!')
+        )

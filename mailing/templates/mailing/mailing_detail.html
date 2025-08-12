@@ -1,0 +1,111 @@
+{% extends "mailing/base.html" %}
+
+{% block mailing_content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Детали рассылки #{{ object.id }}</h5>
+    </div>
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h6>Основная информация</h6>
+                <p><strong>Статус:</strong> 
+                    <span class="badge bg-{% if object.status == 'created' %}info{% elif object.status == 'started' %}success{% else %}secondary{% endif %}">
+                        {{ object.get_status_display }}
+                    </span>
+                </p>
+                <p><strong>Начало:</strong> {{ object.start_time|date:"d.m.Y H:i" }}</p>
+                <p><strong>Окончание:</strong> {{ object.end_time|date:"d.m.Y H:i" }}</p>
+                <p><strong>Владелец:</strong> {{ object.owner.email }}</p>
+            </div>
+            <div class="col-md-6">
+                <h6>Сообщение</h6>
+                <p><strong>Тема:</strong> {{ object.message.subject }}</p>
+                <p><strong>Текст:</strong></p>
+                <div class="border p-2 bg-light rounded">
+                    {{ object.message.body|linebreaks }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="mb-0">Клиенты ({{ object.clients.count }})</h6>
+                    {% if object.status == 'created' or object.status == 'started' %}
+                    <form action="{% url 'mailing:send_mailing' object.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-success">
+                            <i class="bi bi-send"></i> Отправить сейчас
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ФИО</th>
+                                <th>Email</th>
+                                <th>Комментарий</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for client in object.clients.all %}
+                            <tr>
+                                <td>{{ client.full_name }}</td>
+                                <td>{{ client.email }}</td>
+                                <td>{{ client.comment|truncatechars:30 }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3" class="text-center">Нет клиентов</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <h6>Попытки отправки ({{ attempts|length }})</h6>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Дата/время</th>
+                                <th>Статус</th>
+                                <th>Ответ сервера</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for attempt in attempts %}
+                            <tr class="{% if attempt.status == 'success' %}table-success{% else %}table-danger{% endif %}">
+                                <td>{{ attempt.attempt_time|date:"d.m.Y H:i:s" }}</td>
+                                <td>{{ attempt.get_status_display }}</td>
+                                <td>{{ attempt.server_response|truncatechars:50 }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3" class="text-center">Нет попыток отправки</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-top">
+            <a href="{% url 'mailing:mailing_edit' object.pk %}" class="btn btn-warning">
+                <i class="bi bi-pencil"></i> Изменить
+            </a>
+            <a href="{% url 'mailing:mailing_delete' object.pk %}" class="btn btn-danger ms-2">
+                <i class="bi bi-trash"></i> Удалить
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
