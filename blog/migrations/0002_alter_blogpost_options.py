@@ -6,12 +6,21 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0001_initial'),
+        ("blog", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='blogpost',
-            options={'ordering': ['-created_at'], 'permissions': [('can_publish_post', 'Может публиковать запись'), ('can_edit_any_post', 'Может редактировать любую запись'), ('can_delete_any_post', 'Может удалять любую запись')], 'verbose_name': 'Блоговая запись', 'verbose_name_plural': 'Блоговые записи'},
+            name="blogpost",
+            options={
+                "ordering": ["-created_at"],
+                "permissions": [
+                    ("can_publish_post", "Может публиковать запись"),
+                    ("can_edit_any_post", "Может редактировать любую запись"),
+                    ("can_delete_any_post", "Может удалять любую запись"),
+                ],
+                "verbose_name": "Блоговая запись",
+                "verbose_name_plural": "Блоговые записи",
+            },
         ),
     ]
